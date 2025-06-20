@@ -36,7 +36,7 @@ A polished weather web app built using HTML, CSS, and JavaScript with real-time 
 
 ## 🌐 Live Demo
 
-[🔗 View Live App](https://yourusername.github.io/weather-app)
+https://nabintousfofana.github.io/Weather-App/
 
 ## 👩🏽‍💻 Author
 
