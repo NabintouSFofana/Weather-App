@@ -1,0 +1,286 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f7f3;
+  text-align: center;
+  padding: 50px;
+  margin: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+input {
+  padding: 10px;
+  width: 70%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background: #D46A1E;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #b25517;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+
+body.dark-mode .container {
+  background-color: #2c2c2c;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #666;
+}
+
+body.dark-mode .result {
+  color: #eee;
+}
+
+.dark-mode-toggle {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  text-align: center;
+}
+
+.dark-mode-toggle label {
+  display: flex;
+  align-items: center;
+  gap: 0px; /* Remove space */
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dark-mode-toggle input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+  margin-right: 0; /* Ensure no extra spacing */
+}
+
+/* Smooth transition for dark mode */
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Toggle switch container */
+.dark-mode-toggle {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hide the checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider appearance */
+.slider {
+  position: relative;
+  width: 45px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* When checked, move the slider circle */
+.switch input:checked + .slider {
+  background-color: #D46A1E;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(21px);
+}
+
+/* Optional label style */
+.toggle-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.unit-toggle {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: center;
+  color: #555;
+}
+
+.unit-toggle input {
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+#clearBtn {
+  margin-top: 15px;
+  padding: 15px 25px;
+  background: #ccc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #333;
+}
+
+#clearBtn:hover {
+  background: #bbb;
+}
+
+.input-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.clear-wrapper {
+  margin: 10px 0 20px 0;
+}
+
+.unit-toggle-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+/* Reuse switch styles from dark mode */
+.unit-toggle-switch .switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 24px;
+}
+
+.unit-toggle-switch .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.unit-toggle-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.unit-toggle-switch .slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.unit-toggle-switch .switch input:checked + .slider {
+  background-color: #D46A1E;
+}
+
+.unit-toggle-switch .switch input:checked + .slider::before {
+  transform: translateX(21px);
+}
+
+.unit-toggle-switch .toggle-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+#getWeatherBtn {
+  border-radius: 5px;
+  padding: 10px 12px;
+}
+
+
+.input-row {
+  display: flex;
+  align-items: stretch; /* Make both stretch to same height */
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#cityInput,
+#getWeatherBtn {
+  height: 45px;
+  font-size: 1rem;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+#cityInput {
+  flex: 1;
+  border: 2px solid #333;
+  border-radius: 6px;
+}
+
+#getWeatherBtn {
+  background: #D46A1E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+#getWeatherBtn:hover {
+  background-color: #b25517;
+}

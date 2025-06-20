@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Weather App</h1>
+
+    <div class="input-row">
+     <input type="text" id="cityInput" placeholder="Enter a city name" />
+     <button id="getWeatherBtn">Get Weather</button>
+    </div>
+
+    <div class="clear-wrapper">
+      <button id="clearBtn">Clear</button>
+    </div>
+
+    <!-- Unit toggle with switch style -->
+<div class="unit-toggle-switch">
+  <label class="switch">
+    <input type="checkbox" id="unitToggle" />
+    <span class="slider"></span>
+  </label>
+  <span class="toggle-label">🌡️ Show in °F</span>
+</div>
+
+    
+    <div class="dark-mode-toggle">
+  <label class="switch">
+    <input type="checkbox" id="darkModeToggle" />
+    <span class="slider"></span>
+  </label>
+  <span class="toggle-label">🌙 Dark Mode</span>
+</div>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
