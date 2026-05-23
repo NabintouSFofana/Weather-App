@@ -6,6 +6,8 @@
 ## Screenshot
 <img width="971" height="794" alt="image" src="https://github.com/user-attachments/assets/86fafd65-b038-450e-b077-173f58be3780" />
 
+<img width="959" height="842" alt="image" src="https://github.com/user-attachments/assets/e456dbe8-ef90-4014-8a6e-68ffe17f3b6e" />
+
 ---
 
 ## The idea
