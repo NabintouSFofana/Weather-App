@@ -2,43 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F2ECE0" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1A1814" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="A small, honest weather app — built by hand in HTML, CSS, and vanilla JavaScript. Bring-your-own OpenWeatherMap key. No backend, no tracking." />
+  <title>Weather — current sky &amp; next 24 hours</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23F2ECE0'/><circle cx='12' cy='13' r='5' fill='%23B6411C'/><path d='M9 22 q4 -4 8 0 q4 -4 7 0' stroke='%2314110D' stroke-width='2' fill='none' stroke-linecap='round'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>🌤️ Weather App</h1>
 
-    <div class="input-row">
-     <input type="text" id="cityInput" placeholder="Enter a city name" />
-     <button id="getWeatherBtn">Get Weather</button>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ─────────── HEADER ─────────── -->
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Weather — home">
+      <span class="brand-mark" aria-hidden="true">N°</span>
+      <span class="brand-name">Weather</span>
+    </a>
+
+    <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+      <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ─────────── KEY SETUP VIEW ─────────── -->
+  <main id="keyView" class="key-view" aria-labelledby="keyTitle">
+    <div class="key-card">
+      <span class="eyebrow mono">Setup —</span>
+      <h1 id="keyTitle" class="key-title">
+        Bring your own <em>key</em>.
+      </h1>
+      <p class="key-blurb">
+        This is a static, no-backend weather app. To respect rate limits and keep secrets out of public code, you bring your own free <strong>OpenWeatherMap</strong> API key. It saves to <em>this browser only</em> — never sent anywhere except OpenWeather itself.
+      </p>
+
+      <form id="keyForm" class="key-form" novalidate>
+        <label for="apiKeyInput" class="visually-hidden">OpenWeatherMap API key</label>
+        <input
+          type="text"
+          id="apiKeyInput"
+          name="apiKey"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Paste your API key…"
+          required
+        />
+        <button type="submit" class="btn primary">Continue&nbsp;↗</button>
+      </form>
+
+      <a href="https://home.openweathermap.org/users/sign_up" target="_blank" rel="noopener" class="link-btn">
+        Need a free key? Sign up at OpenWeatherMap&nbsp;↗
+      </a>
+
+      <p class="honest-note mono">
+        <span class="lock" aria-hidden="true">⌗</span>
+        Honest note: the free tier gives you 60 requests per minute. The key is stored in this browser's <code>localStorage</code> only — nothing leaves your machine except calls to <code>openweathermap.org</code>.
+      </p>
+    </div>
+  </main>
+
+  <!-- ─────────── APP VIEW ─────────── -->
+  <main id="appView" class="app-view" hidden>
+
+    <!-- Search row -->
+    <form id="searchForm" class="search-row" role="search">
+      <label for="cityInput" class="visually-hidden">City name</label>
+      <input
+        type="text"
+        id="cityInput"
+        name="city"
+        placeholder="Search a city…"
+        autocomplete="off"
+      />
+      <button type="submit" class="btn primary" id="searchBtn">Search</button>
+      <button type="button" id="locateBtn" class="btn" title="Use my location" aria-label="Use my location">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        <span class="locate-label">Locate</span>
+      </button>
+    </form>
+
+    <!-- Recent searches -->
+    <div id="recents" class="recents" hidden>
+      <span class="mono recents-label">Recent</span>
+      <ul id="recentsList" class="recents-list" role="list"></ul>
     </div>
 
-    <div class="clear-wrapper">
-      <button id="clearBtn">Clear</button>
-    </div>
+    <!-- Loading state -->
+    <section id="loadingState" class="loading-state" hidden aria-live="polite">
+      <span class="loading-spinner" aria-hidden="true"></span>
+      <span class="mono">Fetching from openweathermap.org…</span>
+    </section>
 
-    <!-- Unit toggle with switch style -->
-<div class="unit-toggle-switch">
-  <label class="switch">
-    <input type="checkbox" id="unitToggle" />
-    <span class="slider"></span>
-  </label>
-  <span class="toggle-label">🌡️ Show in °F</span>
-</div>
+    <!-- Error state -->
+    <section id="errorState" class="error-state" hidden aria-live="polite">
+      <span class="error-icon" aria-hidden="true">⌗</span>
+      <p id="errorMessage" class="error-message"></p>
+      <button type="button" id="errorRetry" class="link-btn" hidden>Try again</button>
+      <button type="button" id="errorChangeKey" class="link-btn" hidden>Change API key</button>
+    </section>
 
-    
-    <div class="dark-mode-toggle">
-  <label class="switch">
-    <input type="checkbox" id="darkModeToggle" />
-    <span class="slider"></span>
-  </label>
-  <span class="toggle-label">🌙 Dark Mode</span>
-</div>
+    <!-- Welcome / empty state -->
+    <section id="welcomeState" class="welcome-state">
+      <p class="welcome-line">
+        <em>Hello.</em> Search a city, or let me check the sky above you.
+      </p>
+    </section>
 
-    <div id="result" class="result"></div>
-  </div>
+    <!-- Weather result -->
+    <section id="weatherResult" class="weather-result" hidden aria-live="polite">
+      <header class="weather-header">
+        <span id="weatherUpdated" class="mono"></span>
+        <span class="mono"> · </span>
+        <span id="weatherSource" class="mono"></span>
+      </header>
+
+      <h2 id="weatherCity" class="weather-city"></h2>
+
+      <div class="weather-hero">
+        <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
+        <div class="hero-temp">
+          <span id="tempValue" class="temp-value"></span><span id="tempUnit" class="temp-unit">°C</span>
+        </div>
+      </div>
+
+      <p id="weatherCondition" class="weather-condition"></p>
+
+      <p class="feels-like">
+        <span class="mono feels-label">Feels like</span>
+        <span id="feelsValue"></span>
+      </p>
+
+      <!-- Unit toggle -->
+      <div class="unit-toggle" role="radiogroup" aria-label="Temperature unit">
+        <button type="button" class="unit-btn is-active" data-unit="c" role="radio" aria-checked="true">°C</button>
+        <button type="button" class="unit-btn" data-unit="f" role="radio" aria-checked="false">°F</button>
+      </div>
+
+      <!-- Stats grid -->
+      <div class="stats-grid">
+        <article class="stat">
+          <span class="stat-label mono">Humidity</span>
+          <span id="statHumidity" class="stat-value">—</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label mono">Wind</span>
+          <span id="statWind" class="stat-value">—</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label mono">Pressure</span>
+          <span id="statPressure" class="stat-value">—</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label mono">Visibility</span>
+          <span id="statVisibility" class="stat-value">—</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label mono">Sunrise</span>
+          <span id="statSunrise" class="stat-value">—</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label mono">Sunset</span>
+          <span id="statSunset" class="stat-value">—</span>
+        </article>
+      </div>
+
+      <!-- Forecast -->
+      <section id="forecastSection" class="forecast-section" hidden>
+        <div class="section-rule">
+          <span class="section-rule-label mono">Next 24 hours</span>
+        </div>
+        <div class="forecast-strip" id="forecastStrip" role="list"></div>
+      </section>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span class="mono">
+        Data: <a href="https://openweathermap.org" target="_blank" rel="noopener" class="footer-link">OpenWeatherMap</a>
+      </span>
+      <button type="button" id="changeKeyBtn" class="link-btn">Change API key&nbsp;↗</button>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
