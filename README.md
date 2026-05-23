@@ -3,9 +3,8 @@
 > A small, honest weather app — built by hand in HTML, CSS, and vanilla JavaScript.
 > Talks to [OpenWeatherMap](https://openweathermap.org). No framework. No backend. No tracking.
 
-[**Live demo →**](https://nabintousfofana.github.io/Weather-App/)
-
-![Weather screenshot]![alt text](image.png)
+## Screenshot
+<img width="971" height="794" alt="image" src="https://github.com/user-attachments/assets/86fafd65-b038-450e-b077-173f58be3780" />
 
 ---
 
